@@ -1,0 +1,10 @@
+tsplib95
+matplotlib
+networkx
+sympy
+numpy
+matplotlib
+setuptools
+pandas
+tabulate
+        
