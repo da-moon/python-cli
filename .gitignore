@@ -138,4 +138,5 @@ dmypy.json
 cython_debug/
 
 # user defined
-export
+tmp
+.vagrant
