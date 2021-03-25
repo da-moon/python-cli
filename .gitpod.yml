@@ -30,3 +30,4 @@ vscode:
     - wayou.vscode-todo-highlight
     - redhat.vscode-yaml
     - ms-python.python
+    - EditorConfig.EditorConfig
