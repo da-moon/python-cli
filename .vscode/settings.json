@@ -1,5 +1,34 @@
 {
-    "python.pythonPath": "/home/gitpod/.pyenv/versions/3.8.2/bin/python",
-    "python.linting.pylintEnabled": true,
-    "python.formatting.provider": "autopep8"
+  "python.pythonPath": "${workspaceFolder}/.venv/bin/python3.9",
+  "files.eol": "\n",
+  "terminal.integrated.shell.linux": "${env:SHELL}",
+  // "terminal.integrated.shell.linux": "/bin/bash",
+  "terminal.integrated.shellArgs.linux": [
+    "-c",
+    "poetry shell && poetry install && ${env:SHELL} || poetry install && poetry shell && ${env:SHELL} || ${env:SHELL}",
+  ],
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "editor.formatOnType": true,
+  "editor.formatOnPaste": true,
+  "python.terminal.activateEnvironment": false,
+  "python.poetryPath": "${env:HOME}/.poetry/bin",
+  "python.linting.enabled": true,
+  "python.linting.flake8Enabled": true,
+  "python.linting.mypyEnabled": false,
+  "python.linting.mypyPath": "${workspaceFolder}/.venv/bin/mypy",
+  "python.linting.pylintEnabled": false,
+  "python.linting.pylintPath": "${workspaceFolder}/.venv/bin/pylint",
+  "python.testing.pytestEnabled": true,
+  "python.testing.pytestPath": "${workspaceFolder}/.venv/bin/pytest",
+  "python.sortImports.path": "${workspaceFolder}/.venv/bin/isort",
+  "python.formatting.provider": "yapf",
+  "python.formatting.yapfArgs": [
+    "--style",
+    "{based_on_style: pep8, indent_width: 4}"
+  ],
+  "python.analysis.disabled": [
+    "undefined-variable",
+    "unresolved-import"
+  ]
 }
