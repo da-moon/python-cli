@@ -1,0 +1,16 @@
+services:
+  operator:
+    container_name: operator-container
+    build:
+      context: ../contrib/docker/dev/alpine
+      dockerfile: Dockerfile
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ../:/workspace:cached
+    command:
+      - /bin/sh
+      - -cex
+      - >
+        sudo chown "`id -u`:`id -g`" /workspace -R &&
+        make -C /workspace clean &&
+        while sleep 1000; do :; done

@@ -1,10 +1,21 @@
-image: fjolsvin/gitpod-python:latest
+image:
+  file: .gitpod.Dockerfile
 
 tasks:
   - init: >
-      chmod +x contrib/scripts/* &&
-      make  init &&
-      make -j$(nproc) run
+      poetry install &&
+      [ -r .venv/pyvenv.cfg ] &&
+      sed -i "/include-system-site-packages/d" .venv/pyvenv.cfg &&
+      echo "include-system-site-packages = true" | tee -a .venv/pyvenv.cfg
+
+  - command: >
+      [ -r .venv/pyvenv.cfg ] &&
+      sed -i "/include-system-site-packages/d" .venv/pyvenv.cfg &&
+      echo "include-system-site-packages = true" | tee -a .venv/pyvenv.cfg
+
+ports:
+  - port: 3000-10000
+    onOpen: ignore
 github:
   prebuilds:
     master: true
@@ -13,21 +24,27 @@ github:
     pullRequestsFromForks: true
     addComment: true
     addBadge: true
-ports:
-  - port: 6080
-    onOpen: open-preview
+
 vscode:
   extensions:
-    - wmaurer.change-case
-    - emeraldwalk.RunOnSave
-    - vscode-snippet.snippet
-    - bungcip.better-toml
-    - streetsidesoftware.code-spell-checker
-    - zalo.symplex
-    - yixian.yapep
-    - mechatroner.rainbow-csv
-    - phplasma.csv-to-table
-    - wayou.vscode-todo-highlight
-    - redhat.vscode-yaml
     - ms-python.python
+    - karyfoundation.comment
+    - bungcip.better-toml
+    - mutantdino.resourcemonitor
+    - redhat.vscode-yaml
+    - streetsidesoftware.code-spell-checker
+    - vscode-snippet.snippet
+    - wayou.vscode-todo-highlight
+    - wmaurer.change-case
+    - yzane.markdown-pdf
+    - yzhang.markdown-all-in-one
+    - aaron-bond.better-comments
+    - bungcip.better-toml
     - EditorConfig.EditorConfig
+    - emeraldwalk.RunOnSave
+    - kevinkyang.auto-comment-blocks
+    - ms-azuretools.vscode-docker
+    - wholroyd.hcl
+    - skellock.just
+    - tomoyukim.vscode-mermaid-editor
+    - gruntfuggly.todo-tree

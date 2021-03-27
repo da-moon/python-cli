@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+#
+# ─── ADDS PYTHON3 SHEBANG IF A FILE DOES NOT HAVE IT ────────────────────────────
+#   
+function add_shebang(){
+  targets=($(find $PWD -type f -name '*.py' -not -path '*/\.git/*' -a -not -path '*/\.venv/*' -a -not -path '*/\.mypy_cache/*' -a -not -path '*/__pycache__/*')); 
+  local -r shebang='#!/usr/bin/env python3'
+  local -r utf='# -*- coding: utf-8 -*-'
+  
+
+  for name in "${targets[@]}";do 
+    chmod +x "$name"
+    sed -i.bak \
+      -e '/#!\/usr\/bin\/env python3/d' \
+      -e  '/# -\*- coding: utf-8 -\*-/d' \
+      -e '/import logging/d' \
+      -e '/LOGGER = logging.getLogger/d' \
+      "$name"
+    echo "LOGGER = logging.getLogger(__name__)" | cat - "$name" > "$name"-temp && mv "$name"-temp "$name"
+    echo "import logging" | cat - "$name" > "$name"-temp && mv "$name"-temp "$name"
+    echo "$utf" | cat - "$name" > "$name"-temp && mv "$name"-temp "$name"
+    echo "$shebang" | cat - "$name" > "$name"-temp && mv "$name"-temp "$name"
+  done
+}
+if [ -z "${BASH_SOURCE+x}" ]; then
+  add_shebang 
+  exit $?
+else
+  if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    add_shebang 
+    exit $?
+  else
+    export -f add_shebang 
+  fi
+fi
+# ─── CLEAN UP SNIPPET ───────────────────────────────────────────────────────────
+# find $PWD \
+#   -type f \
+#   -name '*.py.bak' \
+#   -not -path '*/\.git/*' \
+#   -a -not -path '*/\.venv/*' \
+#   -a -not -path '*/\.mypy_cache/*' \
+#   -a -not -path '*/__pycache__/*' | xargs -I {} -P `nproc` rm {}
+# ────────────────────────────────────────────────────────────────────────────────

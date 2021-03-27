@@ -1,0 +1,37 @@
+[tool.poetry]
+name = "project_template"
+version = "0.1.0"
+description = "template for python datascience projects"
+authors = ["da-moon <damoon.external@pm.me>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pbr = "^5.5.1"
+
+[tool.poetry.dev-dependencies]
+yapf = "^0.30.0"
+mypy = "^0.812"
+flake8 = "^3.8.4"
+pylint = "^2.7.2"
+rope = "^0.18.0"
+pytest = "^6.2.2"
+isort = "^5.7.0"
+dill = "^0.3.3"
+pipdeptree = "^2.0.0"
+pip-check-reqs = "^2.2.0"
+javaproperties = "^0.8.0"
+jprops = "^2.0.2"
+
+[tool.isort]
+include_trailing_comma = true
+use_parentheses = true
+multi_line_output = "3"
+
+
+[tool.poetry.scripts]
+clie = "project_template.__main__:main"
+
+[build-system]
+requires = ["poetry>=1.1.5"]
+build-backend = "poetry.masonry.api"

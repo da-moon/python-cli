@@ -39,7 +39,7 @@ define replace_or_update
 	$(call trim, var_name, $(1)); \
 	var_name=$${var_name%'%'}; \
 	var_name=$${var_name#'%'}; \
-        $(call find_replace, $(1), $(2), $(3), $${4:-#}); \
+    $(call find_replace, $(1), $(2), $(3), $${4:-#}); \
 	if [ "$${!var_name}" ] && [ -f "$${file}.backup" ]; then \
 		$(call remove_matching_lines, $$var_name, $${file}.backup); \
 	fi

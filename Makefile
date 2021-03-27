@@ -4,28 +4,48 @@ include contrib/makefiles/pkg/string/string.mk
 include contrib/makefiles/pkg/color/color.mk
 include contrib/makefiles/pkg/functions/functions.mk
 include contrib/makefiles/targets/buildenv/buildenv.mk
+include contrib/makefiles/targets/git/git.mk
+include contrib/makefiles/targets/dependency/dependency.mk
 include contrib/makefiles/targets/python/python.mk
 THIS_FILE := $(firstword $(MAKEFILE_LIST))
 SELF_DIR := $(dir $(THIS_FILE))
-
-.PHONY: run init clean print
-.SILENT: run init clean print
-run: 
+.PHONY:init
+.SILENT: init
+init:
 	- $(call print_running_target)
-	- @$(MAKE) --no-print-directory -f $(THIS_FILE) python-run
+	- @$(MAKE) --no-print-directory -f $(THIS_FILE) python-init
+	- $(call print_completed_target)
+	
+.PHONY: kill
+.SILENT: kill
+kill:
+	- $(call print_running_target)
+	- @$(MAKE) --no-print-directory -f $(THIS_FILE) python-kill-server
+	- $(call print_completed_target)
+.PHONY: server 
+.SILENT: server
+server: python-server
+	- $(call print_running_target)
+	- $(call print_completed_target)
+.PHONY:build
+.SILENT: build
+build:
+	- $(call print_running_target)
+	- @$(MAKE) --no-print-directory -f $(THIS_FILE) python-pex
 	- $(call print_completed_target)
 
-init: 
-	- $(call print_running_target)
-	- @$(MAKE) --no-print-directory -f $(THIS_FILE) python-clean
-	- @$(MAKE) --no-print-directory -f $(THIS_FILE) python-pip
-	- @$(MAKE) --no-print-directory -f $(THIS_FILE) python-develop
-	- $(call print_completed_target)
+.PHONY:clean
+.SILENT: clean
 clean:
 	- $(call print_running_target)
 	- @$(MAKE) --no-print-directory -f $(THIS_FILE) python-clean
+	- $(RM) tmp
+	- $(MKDIR) tmp
 	- $(call print_completed_target)
-print:
+.PHONY:  targets
+.SILENT: targets
+targets:
 	- $(call print_running_target)
-	- @$(MAKE) --no-print-directory -f $(THIS_FILE) python-print
+	- @$(MAKE) --no-print-directory -f $(THIS_FILE) python
+	- @$(MAKE) --no-print-directory -f $(THIS_FILE) dependency
 	- $(call print_completed_target)
