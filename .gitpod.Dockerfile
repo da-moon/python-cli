@@ -1,5 +1,6 @@
 FROM fjolsvin/gitpod-python:latest
-
+RUN set -ex && \ 
+  cargo install -j`nproc` pyoxidizer
 RUN set -ex && \ 
   cargo install -j`nproc` tokei
 RUN set -ex && \ 
