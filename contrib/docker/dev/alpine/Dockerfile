@@ -54,6 +54,9 @@ RUN export CFLAGS="-Wno-stringop-overflow -Wno-stringop-truncation"; \
 RUN sudo python3 -m pip install ..
 RUN rm -rf /tmp/pyinstaller
 # ────────────────────────────────────────────────────────────────────────────────
+RUN set -ex && \ 
+  cargo install -j`nproc` pyoxidizer
+ENV PIP_USER=false
 ENV SHELL="/usr/bin/nu"
 ENV PATH="$PATH:${WORKDIR}/dist/pex"
 ENV PATH="$PATH:${WORKDIR}/contrib/scripts/utils"
